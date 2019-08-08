@@ -1,11 +1,12 @@
-HEADER = 
-SOURCE = queue-en.tex
-OBJECT = queue-en
-TEX = latex
+SRC = queue
+OBJ = $(SRC)-en.pdf
+OBJ_CN = $(SRC)-zh-cn.pdf
+TEX = xelatex
 
 .PHONY: all
 
-all: pdf
+all: tex
+tex: $(OBJ)
 
 cpp:
 	$(MAKE) cpp -C src
@@ -22,16 +23,9 @@ tool:
 image:
 	$(MAKE) -C img
 
-pdf: $(OBJECT).dvi
-	dvipdfmx $(OBJECT)
-
-tex: image
-	latex $(OBJECT)
-	latex $(OBJECT)
-
-html: image
-	htlatex.bat $(OBJECT) "html, imgdir:img/"
-	mv *.png img/
+%.pdf: %.tex image
+	$(TEX) $<
+	$(TEX) $<
 
 clean:
-	rm *.aux *.dvi *.log *.out *.pdf *~
+	rm -f *.aux *.dvi *.log *.out *.pdf *~

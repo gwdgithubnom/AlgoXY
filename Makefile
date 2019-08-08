@@ -22,12 +22,15 @@ datastruct/elementary/queue/queue-en \
 datastruct/elementary/sequence/sequence-en \
 sorting/dc-sort/dcsort-en \
 search/search-en \
-others/appendix/list/list-en
-CHAPTER_OBJS = $(foreach file, $(CHAPTERS), $(file).dvi)
+others/appendix/list/list-en \
+others/appendix/rbt-del/rbt-del-en
+
+CHAPTER_OBJS = $(foreach file, $(CHAPTERS), $(file).pdf)
+CHAPTER_SRCS = $(foreach file, $(CHAPTERS), $(file).tex)
 
 all: $(BOOK).pdf
 
-%.dvi : %.tex
+%.pdf : %.tex
 	$(MAKE) -C $(@D) tex
 
 image:
@@ -47,3 +50,4 @@ clean:
 
 distclean: clean
 	rm -f *.pdf *.dvi *~
+	rm -f $(CHAPTER_OBJS)
